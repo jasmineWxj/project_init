@@ -1,0 +1,12 @@
+root = true
+
+[*]
+indent_style = space # 缩进风格，可选配置有 tab 和 space
+indent_size = 2      # 锁进大小
+charset = utf-8
+trim_trailing_whitespace = true  # 去除多余的空格，比如你不小心在尾巴多打了个空格，它会给你自动去掉。
+insert_final_newline = true      #
+end_of_line = lf
+
+[*.md]
+trim_trailing_whitespace = false
