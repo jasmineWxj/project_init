@@ -1,6 +1,8 @@
 const { resolve } = require('path');
 const { PROJECT_PATH, isDev } = require('../constant');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // css 单独文件
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // css 代码压缩
 
 module.exports = {
     entry: {
@@ -18,7 +20,7 @@ module.exports = {
                 test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
                 type: 'asset/resource',
                 generator: {
-                    filename: 'img/[name][hash:8][ext]',
+                    filename: 'images/[hash:8][ext][query]',
                 },
                 parser: {
                     dataUrlCondition: {
@@ -38,12 +40,50 @@ module.exports = {
                 test: /\.(ttf|woff|woff2|eot|otf)$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'font/[name][hash:8][ext]',
+                    filename: 'fonts/[hash:8][ext][query]',
                 },
             },
             {
                 test: /\.txt$/,
                 type: 'asset/source',
+            },
+            {
+                test: /\.css$/, //只检测 css 为后缀的文件
+                use: [
+                    // 执行顺序 从下到上
+                    // 'style-loader', //style-loader 将js 中的css通过创建style 标签添加
+                    MiniCssExtractPlugin.loader,
+                    // html 文件中生效
+                    'css-loader', //将css 资源编译成commonjs的模块到js
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    'postcss-preset-env', //能解决大部分兼容问题
+                                ],
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    'postcss-preset-env', //能解决大部分兼容问题
+                                ],
+                            },
+                        },
+                    },
+                    'less-loader',
+                ],
             },
         ],
     },
@@ -70,5 +110,9 @@ module.exports = {
                       useShortDoctype: true,
                   },
         }),
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].bundle.css',
+        }),
+        new CssMinimizerPlugin(),
     ],
 };
