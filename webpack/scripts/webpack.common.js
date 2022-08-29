@@ -3,16 +3,24 @@ const { PROJECT_PATH, isDev } = require('../constant');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // css 单独文件
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // css 代码压缩
-
+const WebpackBar = require('webpackbar'); // 显示打包速度
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'); // 打包或启动本地服务时给予错误提示
+console.log(resolve(PROJECT_PATH, './src/components'));
 module.exports = {
     entry: {
-        app: resolve(PROJECT_PATH, './src/index.js'),
+        app: resolve(PROJECT_PATH, './src/index.tsx'),
     },
     output: {
         filename: `js/[name]${isDev ? '' : '.[hash:8]'}.js`,
         path: resolve(PROJECT_PATH, './dist'),
         clean: true, //清理dist
         assetModuleFilename: 'images/[contenthash][ext]',
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js', '.json'],
+        alias: {
+            '@': resolve(PROJECT_PATH, './src/components'),
+        },
     },
     module: {
         rules: [
@@ -85,6 +93,12 @@ module.exports = {
                     'less-loader',
                 ],
             },
+            {
+                test: /\.(tsx?|js)$/,
+                loader: 'babel-loader',
+                options: { cacheDirectory: true }, // 公共文件缓存
+                exclude: /node_modules/,
+            },
         ],
     },
 
@@ -114,5 +128,14 @@ module.exports = {
             filename: 'css/[name].bundle.css',
         }),
         new CssMinimizerPlugin(),
+        new WebpackBar({
+            name: isDev ? '正在启动' : '正在打包',
+            color: '#fa8c16',
+        }),
+        new ForkTsCheckerWebpackPlugin({
+            typescript: {
+                configFile: resolve(PROJECT_PATH, './tsconfig.json'),
+            },
+        }),
     ],
 };

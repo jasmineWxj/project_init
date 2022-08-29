@@ -22,4 +22,12 @@ module.exports = {
         'no-trailing-spaces': 0,
         'eol-last': 0,
     },
+    settings: {
+        'import/resolver': {
+            node: {
+                extensions: ['.tsx', '.ts', '.js', '.json'],
+            },
+            typescript: {},
+        },
+    },
 };
