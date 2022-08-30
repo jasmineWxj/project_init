@@ -22,6 +22,15 @@ module.exports = {
             '@': resolve(PROJECT_PATH, './src/components'),
         },
     },
+    performance: {
+        hints: 'warning', // 枚举
+        maxAssetSize: 30000000, // 整数类型（以字节为单位）
+        maxEntrypointSize: 50000000, // 整数类型（以字节为单位）
+        assetFilter: function (assetFilename) {
+            // 提供资源文件名的断言函数
+            return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
+        },
+    },
     module: {
         rules: [
             {
@@ -129,7 +138,7 @@ module.exports = {
         }),
         new CssMinimizerPlugin(),
         new WebpackBar({
-            name: isDev ? '正在启动' : '正在打包',
+            name: isDev ? '正在启动⛷‍' : '正在打包⛷‍',
             color: '#fa8c16',
         }),
         new ForkTsCheckerWebpackPlugin({
