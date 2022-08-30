@@ -138,7 +138,9 @@ module.exports = {
                   },
         }),
         new MiniCssExtractPlugin({
-            filename: 'css/[name].bundle.css',
+            filename: 'css/[name].[contenthash:8].css',
+            chunkFilename: 'css/[name].[contenthash:8].css',
+            ignoreOrder: false,
         }),
         new CssMinimizerPlugin(),
         new WebpackBar({
