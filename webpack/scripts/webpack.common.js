@@ -6,7 +6,8 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // css 代�
 const WebpackBar = require('webpackbar'); // 显示打包速度
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'); // 打包或启动本地服务时给予错误提示
 var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const { handlerRunConfig, initRunIcon } = require('run-success-icon');
+const { handlerRunConfig, initRunIcon } = require('run-success-icon'); // log 佛祖
+const CopyPlugin = require('copy-webpack-plugin'); // 复制 ico
 
 console.log(resolve(PROJECT_PATH, './src/components'));
 module.exports = {
@@ -155,6 +156,14 @@ module.exports = {
                 notes: ['🎉🎉🎉🎉🎉🎉🎉'],
             },
             clearConsole: true,
+        }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: resolve(PROJECT_PATH, './public/favicon.ico'),
+                    to: resolve(PROJECT_PATH, './dist/favicon.ico'),
+                },
+            ],
         }),
     ],
 };
