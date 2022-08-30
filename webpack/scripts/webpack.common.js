@@ -5,6 +5,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // css 单独�
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // css 代码压缩
 const WebpackBar = require('webpackbar'); // 显示打包速度
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'); // 打包或启动本地服务时给予错误提示
+var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const { handlerRunConfig, initRunIcon } = require('run-success-icon');
+
 console.log(resolve(PROJECT_PATH, './src/components'));
 module.exports = {
     entry: {
@@ -23,7 +26,7 @@ module.exports = {
         },
     },
     performance: {
-        hints: 'warning', // 枚举
+        hints: false, // 枚举
         maxAssetSize: 30000000, // 整数类型（以字节为单位）
         maxEntrypointSize: 50000000, // 整数类型（以字节为单位）
         assetFilter: function (assetFilename) {
@@ -144,6 +147,12 @@ module.exports = {
         new ForkTsCheckerWebpackPlugin({
             typescript: {
                 configFile: resolve(PROJECT_PATH, './tsconfig.json'),
+            },
+        }),
+        new FriendlyErrorsWebpackPlugin({
+            compilationSuccessInfo: {
+                messages: [initRunIcon('beauty')],
+                notes: ['🎉🎉🎉🎉🎉🎉🎉'],
             },
         }),
     ],
