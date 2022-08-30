@@ -154,6 +154,7 @@ module.exports = {
                 messages: [initRunIcon('beauty')],
                 notes: ['🎉🎉🎉🎉🎉🎉🎉'],
             },
+            clearConsole: true,
         }),
     ],
 };
