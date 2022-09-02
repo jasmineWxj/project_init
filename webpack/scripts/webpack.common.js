@@ -23,7 +23,7 @@ module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.json'],
         alias: {
-            '@': resolve(PROJECT_PATH, './src/components'),
+            '@': resolve(PROJECT_PATH, './src'),
         },
     },
     performance: {
@@ -138,8 +138,8 @@ module.exports = {
                   },
         }),
         new MiniCssExtractPlugin({
-            filename: 'css/[name].[contenthash:8].css',
-            chunkFilename: 'css/[name].[contenthash:8].css',
+            filename: 'css/[name].css',
+            chunkFilename: 'css/[name].css',
             ignoreOrder: false,
         }),
         new CssMinimizerPlugin(),
