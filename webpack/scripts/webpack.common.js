@@ -100,10 +100,30 @@ module.exports = {
                                 plugins: [
                                     'postcss-preset-env', //能解决大部分兼容问题
                                 ],
+                                lessOptions: {
+                                    javascriptEnabled: true,
+                                },
                             },
                         },
                     },
                     'less-loader',
+                ],
+            },
+            {
+                //  专门处理antd的css样式
+                test: /\.(less)$/,
+                include: /node_modules/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            lessOptions: {
+                                javascriptEnabled: true,
+                            },
+                        },
+                    },
                 ],
             },
             {
