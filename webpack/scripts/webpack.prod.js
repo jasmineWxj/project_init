@@ -10,10 +10,10 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     output: {},
     plugins: [
-        new PurgeCSSPlugin({
-            // 去除多余的样式
-            paths: glob.sync(`${resolve(PROJECT_PATH, './src')}/**/*.{tsx,scss,less,css}`, { nodir: true }),
-            whitelist: ['html', 'body'],
-        }),
+        // new PurgeCSSPlugin({
+        //     // 去除多余的样式
+        //     paths: glob.sync(`${resolve(PROJECT_PATH, './src')}/**/*.{tsx,scss,less,css}`, { nodir: true }),
+        //     whitelist: ['html', 'body'],
+        // }),
     ],
 });
